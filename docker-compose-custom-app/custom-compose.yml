@@ -1,0 +1,26 @@
+services:
+  app:
+    depends_on:
+      - mongo
+    build:
+      context: .
+    ports:
+      - 5000:5000
+    image: vibhashanadev/docker-compose-custom-app:latest
+    container_name: docker-compose-custom-app-frontend
+    networks:
+      - custom-network
+    restart: always
+
+  mongo:
+    image: circleci/mongo:latest
+    ports:
+      - 27017:27017
+    networks:
+      - custom-network
+    container_name: docker-compose-custom-app-db
+    restart: always
+
+networks:
+  custom-network:
+    driver: bridge
