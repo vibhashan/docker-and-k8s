@@ -1,0 +1,23 @@
+version: "3"
+services:
+  python-service:
+    build:
+      context: .
+      dockerfile: python.dockerfile
+      args:
+        - BASE_IMAGE=python:3.12.9-alpine3.21
+        - APP_VERSION=2.0
+    environment:
+      - DEBUG=true
+    image: python-service:latest
+
+  node-service:
+    build:
+      context: .
+      dockerfile: node.dockerfile
+      args:
+        - BASE_IMAGE=node:16-buster-slim
+        - APP_NAME=nodejs app
+    environment:
+      - NODE_ENV=development
+    image: node-service:latest
