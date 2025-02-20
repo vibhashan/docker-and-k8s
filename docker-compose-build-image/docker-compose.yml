@@ -9,7 +9,7 @@ services:
         - APP_VERSION=2.0
     environment:
       - DEBUG=true
-    image: python-service:latest
+    image: vibhashanadev/python-service:latest
 
   node-service:
     build:
@@ -20,4 +20,4 @@ services:
         - APP_NAME=nodejs app
     environment:
       - NODE_ENV=development
-    image: node-service:latest
+    image: vibhashanadev/node-service:latest
