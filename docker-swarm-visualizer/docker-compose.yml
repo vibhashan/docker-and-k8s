@@ -1,0 +1,12 @@
+services:
+  visualizer:
+    image: dockersamples/visualizer:stable
+    container_name: swarm-visualizer # No longer supported.
+    ports:
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager # Can only be executed in a manager node.
