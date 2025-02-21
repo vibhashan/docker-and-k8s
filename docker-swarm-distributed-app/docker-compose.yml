@@ -1,0 +1,52 @@
+# A docker stack deployment file to be used in a docker swarm.
+
+services:
+  redis:
+    image: redis:alpine
+    networks:
+      - frontend
+
+  db:
+    image: postgres:17-alpine3.20
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - backend
+
+  vote:
+    image: dockersamples/examplevotingapp_vote
+    ports:
+      - "5000:80"
+    networks:
+      - frontend
+    deploy:
+      replicas: 2
+
+  result:
+    image: dockersamples/examplevotingapp_result
+    ports:
+      - "5001:80"
+    networks:
+      - backend
+    deploy:
+      replicas: 2
+
+  worker:
+    image: dockersamples/examplevotingapp_worker
+    networks:
+      - frontend
+      - backend
+    deploy:
+      replicas: 2
+
+networks:
+  frontend:
+    driver: overlay
+  backend:
+    driver: overlay
+
+volumes:
+  db-data:
