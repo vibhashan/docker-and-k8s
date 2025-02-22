@@ -1,0 +1,10 @@
+services:
+  postgres_db:
+    image: postgres:13.20-alpine3.20
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.region==us-east
+    environment:
+      POSTGRES_PASSWORD: test-password-123
