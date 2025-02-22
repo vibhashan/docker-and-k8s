@@ -1,0 +1,27 @@
+services:
+  postgres:
+    image: postgres:16.8-alpine3.21
+    secrets:
+      - db_username
+      - db_password
+    environment:
+      POSTGRES_USER_FILE: /run/secrets/db_username
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+
+  centos:
+    image: centos
+    deploy:
+      replicas: 1
+    entrypoint: ["/bin/sh"]
+    stdin_open: true
+    tty: true
+    secrets:
+      - source: my-secret # Read the secret from CLI
+
+secrets:
+  db_username:
+    file: ./db_username.txt
+  db_password:
+    file: ./db_password.txt
+  my-secret:
+    external: true
