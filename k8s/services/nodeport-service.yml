@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service-nodeport
+spec:
+  type: NodePort # This is the default service type
+  selector: # Pod selector
+    app: frontend
+  ports:
+    - port: 3001
+      targetPort: 80
+      protocol: TCP
+      nodePort: 30099
